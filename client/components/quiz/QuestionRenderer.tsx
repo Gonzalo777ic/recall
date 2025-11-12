@@ -254,5 +254,74 @@ export default function QuestionRenderer({
     );
   }
 
+  if (question.type === 'fill-in-the-blank') {
+    const [textAnswer, setTextAnswer] = useState<string>(
+      (userAnswer as string) || ''
+    );
+    
+    // 1. Determinar las respuestas válidas y convertirlas a un array de strings (ya normalizados).
+    // Usamos una Type Assertion temporal para que TypeScript sepa que tiene la propiedad correctText.
+    const fillInQuestion = question as any; 
+    
+    const correctAnswers = Array.isArray(fillInQuestion.correctText)
+      ? fillInQuestion.correctText.map((s: string) => s.toLowerCase().trim())
+      : [fillInQuestion.correctText.toLowerCase().trim()];
+    
+    // 2. Normalizar la respuesta del usuario.
+    const normalizedUserAnswer = textAnswer.toLowerCase().trim();
+
+    // 3. Realizar la comparación.
+    // Usamos el resultado REAL del store (userAnswer) si está disponible, 
+    // pero para fines de visualización en el frontend, comparamos el texto normalizado.
+    const isCorrect = answered && correctAnswers.includes(normalizedUserAnswer);
+
+
+    return (
+      <div className="space-y-6">
+        <h2 className="text-2xl font-bold text-gray-900">{question.question}</h2>
+        
+        <input
+          type="text"
+          value={textAnswer}
+          onChange={(e) => setTextAnswer(e.target.value)}
+          disabled={answered}
+          placeholder="Escribe tu respuesta aquí..."
+          className="w-full p-4 border-2 rounded-lg text-gray-900 focus:outline-none focus:border-purple-500 transition-colors"
+        />
+
+        {!answered && (
+          <button
+            onClick={() => onAnswer(textAnswer)}
+            disabled={textAnswer.trim() === ''}
+            className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors disabled:opacity-50"
+          >
+            Submit Answer
+          </button>
+        )}
+
+        {answered && (
+          <>
+            <div className={`border-2 rounded-lg p-4 ${isCorrect ? 'bg-green-50 border-green-500' : 'bg-red-50 border-red-500'}`}>
+              <p className="font-semibold text-gray-900 mb-1">
+                {isCorrect ? '✓ Respuesta Correcta' : '✗ Respuesta Incorrecta'}
+              </p>
+              {!isCorrect && (
+                  <p className="text-red-800">Tu respuesta: **{userAnswer as string}**</p>
+              )}
+              <p className="text-gray-800">Respuesta(s) correcta(s): **{question.correctText}**</p>
+            </div>
+          
+            {question.explanation && (
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <p className="font-semibold text-blue-900 mb-1">Explanation</p>
+                <p className="text-blue-800">{question.explanation}</p>
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    );
+  }
+
   return <div className="text-gray-500">Unknown question type</div>;
 }

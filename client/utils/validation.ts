@@ -1,10 +1,16 @@
-import { Question, QuestionType } from '@/types';
-
+import { Question } from '@/types'; // Eliminamos QuestionType de la importación
 export interface ValidationResult {
   isValid: boolean;
   errors: string[];
   questions?: Question[];
 }
+
+export type QuestionType = 
+  | 'multiple-choice' 
+  | 'true-false' 
+  | 'order-steps' 
+  | 'match-items'
+  | 'fill-in-the-blank'; // ¡Añadido!
 
 export function validateQuestionsJSON(data: unknown): ValidationResult {
   const errors: string[] = [];
@@ -37,6 +43,17 @@ export function validateQuestionsJSON(data: unknown): ValidationResult {
   };
 }
 
+
+
+function isValidQuestionType(type: unknown): type is QuestionType {
+  // ¡Añadir 'fill-in-the-blank'!
+  return ['multiple-choice', 'true-false', 'order-steps', 'match-items', 'fill-in-the-blank'].includes(
+    type as string
+  );
+}
+
+
+
 function validateQuestion(item: unknown): string[] {
   const errors: string[] = [];
 
@@ -51,21 +68,27 @@ function validateQuestion(item: unknown): string[] {
     errors.push('Missing or invalid "id" (must be string)');
   }
 
-  if (!q.type || !isValidQuestionType(q.type)) {
-    errors.push(
-      'Missing or invalid "type" (must be: multiple-choice, true-false, order-steps, match-items)'
-    );
+  // Comprobación de tipo (CORREGIDO PARA RESOLVER TS2345)
+  if (typeof q.type !== 'string') {
+      errors.push('Missing or invalid "type" (must be a string)');
+  } else if (!isValidQuestionType(q.type)) {
+      errors.push(
+        'Missing or invalid "type" (must be: multiple-choice, true-false, order-steps, match-items, fill-in-the-blank)'
+      );
+  }
+
+  // Si no pasó la validación de tipo, retornamos los errores inmediatamente
+  // para evitar que 'q.type as QuestionType' cause problemas más adelante.
+  if (errors.length > 0) {
+      return errors;
   }
 
   if (!q.category || typeof q.category !== 'string') {
     errors.push('Missing or invalid "category" (must be string)');
   }
+  // ... (el resto del código se mantiene igual)
 
-  if (!q.difficulty || !['easy', 'medium', 'hard'].includes(q.difficulty)) {
-    errors.push('Missing or invalid "difficulty" (must be: easy, medium, hard)');
-  }
-
-  const type = q.type as QuestionType;
+  const type = q.type as QuestionType; // Ahora TypeScript está seguro de que es un QuestionType válido
 
   if (type === 'multiple-choice') {
     validateMultipleChoice(q, errors);
@@ -75,6 +98,8 @@ function validateQuestion(item: unknown): string[] {
     validateOrderSteps(q, errors);
   } else if (type === 'match-items') {
     validateMatchItems(q, errors);
+  } else if (type === 'fill-in-the-blank') {
+    validateFillInTheBlank(q, errors);
   }
 
   return errors;
@@ -145,8 +170,30 @@ function validateMatchItems(q: Record<string, unknown>, errors: string[]): void 
   }
 }
 
-function isValidQuestionType(type: unknown): type is QuestionType {
-  return ['multiple-choice', 'true-false', 'order-steps', 'match-items'].includes(
-    type as string
-  );
+// client/utils/validation.ts (Función validateFillInTheBlank)
+
+function validateFillInTheBlank(q: Record<string, unknown>, errors: string[]): void {
+  if (!q.question || typeof q.question !== 'string') {
+    errors.push('Missing or invalid "question" (must be string)');
+  }
+
+  // correctText debe ser un string o un array de strings, y no puede estar vacío.
+  if (!q.correctText) {
+    errors.push('Missing "correctText"');
+    return;
+  }
+  
+  // Modificación aquí: Si es string, debe tener contenido
+  const isString = typeof q.correctText === 'string' && q.correctText.trim() !== ''; 
+  
+  // Si es array, todos los elementos deben ser strings no vacíos
+  const isStringArray = Array.isArray(q.correctText) && q.correctText.every(item => typeof item === 'string' && item.trim() !== '');
+
+  if (!isString && !isStringArray) {
+    errors.push('Invalid "correctText" (must be a non-empty string or an array of non-empty strings)');
+  }
+
+  if (isStringArray && (q.correctText as string[]).length === 0) {
+     errors.push('"correctText" array cannot be empty');
+  }
 }

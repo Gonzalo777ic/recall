@@ -1,4 +1,4 @@
-export type QuestionType = 'multiple-choice' | 'true-false' | 'order-steps' | 'match-items';
+type QuestionType = 'multiple-choice' | 'true-false' | 'order-steps' | 'match-items' | 'fill-in-the-blank';
 
 export interface BaseQuestion {
   id: string;
@@ -37,11 +37,23 @@ export interface MatchItemsQuestion extends BaseQuestion {
   explanation?: string;
 }
 
+// 🎯 NUEVA INTERFAZ PARA COMPLETAR EL ESPACIO EN BLANCO
+export interface FillInTheBlankQuestion extends BaseQuestion {
+  type: 'fill-in-the-blank';
+  // El texto que contiene el espacio en blanco o la pregunta que requiere una respuesta de texto
+  question: string; 
+  // La respuesta correcta. Puede ser un string o un array de strings (para aceptar múltiples respuestas válidas).
+  correctText: string | string[]; 
+  explanation?: string;
+}
+
+// Actualización de Question para incluir el nuevo tipo
 export type Question =
   | MultipleChoiceQuestion
   | TrueFalseQuestion
   | OrderStepsQuestion
-  | MatchItemsQuestion;
+  | MatchItemsQuestion
+  | FillInTheBlankQuestion; // ¡Añadido!
 
 export interface SessionConfig {
   id: string;
