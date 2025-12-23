@@ -46,7 +46,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 <Routes>
   <Route path="/" element={<Index />} />
-  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+  {}
   <Route path="*" element={<NotFound />} />
 </Routes>;
 ```
@@ -59,11 +59,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 - **Utility**: `cn()` function combines `clsx` + `tailwind-merge` for conditional classes
 
 ```typescript
-// cn utility usage
+
 className={cn(
   "base-classes",
   { "conditional-class": condition },
-  props.className  // User overrides
+  props.className
 )}
 ```
 
@@ -108,14 +108,14 @@ Open `client/global.css` and `tailwind.config.ts` and add new tailwind colors.
 ```typescript
 export interface MyRouteResponse {
   message: string;
-  // Add other response properties here
+
 }
 ```
 
 2. Create a new route handler in `server/routes/my-route.ts`:
 ```typescript
 import { RequestHandler } from "express";
-import { MyRouteResponse } from "@shared/api"; // Optional: for type safety
+import { MyRouteResponse } from "@shared/api";
 
 export const handleMyRoute: RequestHandler = (req, res) => {
   const response: MyRouteResponse = {
@@ -129,13 +129,13 @@ export const handleMyRoute: RequestHandler = (req, res) => {
 ```typescript
 import { handleMyRoute } from "./routes/my-route";
 
-// Add to the createServer function:
+
 app.get("/api/my-endpoint", handleMyRoute);
 ```
 
 4. Use in React components with type safety:
 ```typescript
-import { MyRouteResponse } from '@shared/api'; // Optional: for type safety
+import { MyRouteResponse } from '@shared/api';
 
 const response = await fetch('/api/my-endpoint');
 const data: MyRouteResponse = await response.json();

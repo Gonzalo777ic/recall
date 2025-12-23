@@ -30,7 +30,7 @@ const App = () => (
           <Route path="/results" element={<ResultsPage />} />
           <Route path="/configure-session" element={<ConfigureSessionPage />} />
           <Route path="/create-question" element={<CreateQuestionPage />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          {}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

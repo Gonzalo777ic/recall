@@ -62,7 +62,7 @@ export default function ResultsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100">
-      {/* Header */}
+      {}
       <header className="border-b border-purple-200/30 bg-white/40 backdrop-blur-xl">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <button
@@ -76,7 +76,7 @@ export default function ResultsPage() {
       </header>
 
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Score Summary */}
+        {}
         <div className="bg-gradient-to-br from-white to-purple-50/50 backdrop-blur border border-purple-200/50 rounded-2xl p-8 md:p-12 mb-8">
           <h1 className={`text-5xl font-bold ${getScoreColor()} mb-2 text-center`}>
             {getScoreMessage()}
@@ -88,7 +88,7 @@ export default function ResultsPage() {
             </p>
           </div>
 
-          {/* Score breakdown */}
+          {}
           <div className="grid grid-cols-3 gap-4 mb-8">
             <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-center">
               <div className="text-2xl font-bold text-green-600">{correctCount}</div>
@@ -104,7 +104,7 @@ export default function ResultsPage() {
             </div>
           </div>
 
-          {/* Action buttons */}
+          {}
           <div className="flex flex-col sm:flex-row gap-3">
             <button
               onClick={handleRetryAll}
@@ -132,7 +132,7 @@ export default function ResultsPage() {
           </div>
         </div>
 
-        {/* Correct Answers */}
+        {}
         {correctCount > 0 && (
           <div className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
@@ -156,7 +156,7 @@ export default function ResultsPage() {
           </div>
         )}
 
-        {/* Incorrect Answers */}
+        {}
         {incorrectCount > 0 && (
           <div>
             <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">

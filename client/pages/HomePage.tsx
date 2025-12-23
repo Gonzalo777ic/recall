@@ -21,7 +21,7 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100">
-      {/* Header */}
+      {}
       <header className="border-b border-purple-200/30 bg-white/40 backdrop-blur-xl">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center gap-3">
@@ -36,7 +36,7 @@ export default function HomePage() {
         </div>
       </header>
 
-      {/* Main Content */}
+      {}
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center mb-16">
           <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
@@ -47,7 +47,7 @@ export default function HomePage() {
           </p>
         </div>
 
-        {/* Stats */}
+        {}
         {questions.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
             <div className="bg-white/70 backdrop-blur border border-purple-200/50 rounded-xl p-6 text-center">
@@ -67,9 +67,9 @@ export default function HomePage() {
           </div>
         )}
 
-        {/* Action Cards */}
+        {}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          {/* Start Quiz Card */}
+          {}
           <button
             onClick={handleStartQuiz}
             disabled={questions.length === 0}
@@ -92,7 +92,7 @@ export default function HomePage() {
             </div>
           </button>
 
-          {/* Upload Questions Card */}
+          {}
           <button
             onClick={() => navigate('/upload')}
             className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-600 p-8 text-left transition-all hover:shadow-2xl hover:scale-105"
@@ -112,7 +112,7 @@ export default function HomePage() {
             </div>
           </button>
 
-          {/* Create Question Card */}
+          {}
           <button
             onClick={() => navigate('/create-question')}
             className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 p-8 text-left transition-all hover:shadow-2xl hover:scale-105"
@@ -132,7 +132,7 @@ export default function HomePage() {
             </div>
           </button>
 
-          {/* Configure Session Card */}
+          {}
           <button
             disabled={questions.length === 0}
             onClick={() => navigate('/configure-session')}
@@ -156,7 +156,7 @@ export default function HomePage() {
           </button>
         </div>
 
-        {/* Features Section */}
+        {}
         <div className="bg-white/60 backdrop-blur border border-purple-200/30 rounded-2xl p-8 mt-16">
           <h3 className="text-2xl font-bold text-gray-900 mb-8">Question Types</h3>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -178,7 +178,7 @@ export default function HomePage() {
         </div>
       </main>
 
-      {/* Footer */}
+      {}
       <footer className="border-t border-purple-200/30 bg-white/30 backdrop-blur mt-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center">
           <p className="text-gray-600">

@@ -3,7 +3,7 @@ import {
   Question, 
   QuizSession, 
   SessionConfig, 
-  // ¡Nuevas importaciones necesarias para checkAnswer!
+
   MultipleChoiceQuestion, 
   TrueFalseQuestion, 
   OrderStepsQuestion, 
@@ -218,8 +218,8 @@ export const useQuizStore = create<QuizState>((set) => ({
   },
 }));
 
-// En useQuizStore.ts
-// --- Type Guards (Aseguran que la Question tiene las propiedades necesarias) ---
+
+
 function isMatchItemsQuestion(question: Question): question is MatchItemsQuestion {
     return question.type === 'match-items' && 'pairs' in question;
 }
@@ -227,58 +227,58 @@ function isMatchItemsQuestion(question: Question): question is MatchItemsQuestio
 function isFillInTheBlankQuestion(question: Question): question is FillInTheBlankQuestion {
     return question.type === 'fill-in-the-blank' && 'correctText' in question;
 }
-// --------------------
+
 
 function checkAnswer(question: Question, answer: unknown): boolean {
   switch (question.type) {
     case 'multiple-choice':
-      // Usamos Type Assertion para acceder a .correctAnswer
+
       return answer === (question as MultipleChoiceQuestion).correctAnswer;
       
     case 'true-false':
       return answer === (question as TrueFalseQuestion).correctAnswer;
       
     case 'order-steps':
-      // Usamos Type Assertion para acceder a .correctOrder
+
       return JSON.stringify(answer) === JSON.stringify((question as OrderStepsQuestion).correctOrder);
       
     case 'match-items':
-      // Usamos Type Guard
+
       if (!isMatchItemsQuestion(question)) return false; 
       
-      // La respuesta (answer) debe ser un array
+
       if (!Array.isArray(answer)) return false;
       
-      // Lógica de verificación de Match Items (Asegúrese de que esta lógica coincida con cómo su front-end organiza la respuesta)
-      // *Se mantiene la lógica previa, ya que debe coincidir con su front-end*
+
+
       return answer.every(
         (match: { left: number; right: number }, index: number) =>
           question.pairs[match.left]?.right === question.pairs[match.right]?.right
       );
       
-    // Lógica para el nuevo tipo Fill-in-the-Blank
+
     case 'fill-in-the-blank':
-      // Usamos Type Guard
+
       if (!isFillInTheBlankQuestion(question)) return false;
 
-      // La respuesta del usuario debe ser un string
+
       if (typeof answer !== 'string') return false;
       
-      // Función de normalización: convierte a minúsculas y quita espacios/puntuación
+
       const normalize = (text: string) => 
         text.toLowerCase().trim().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
       
       const normalizedUserAnswer = normalize(answer);
       
-      // Usamos Type Assertion para acceder a .correctText
+
       const correctText = (question as FillInTheBlankQuestion).correctText;
 
-      // Si correctText es un array (múltiples respuestas válidas)
+
       if (Array.isArray(correctText)) {
         return correctText.some(correct => normalize(correct) === normalizedUserAnswer);
       }
       
-      // Si correctText es un string simple
+
       return normalize(correctText) === normalizedUserAnswer;
 
     default:

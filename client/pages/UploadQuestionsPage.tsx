@@ -107,7 +107,7 @@ export default function UploadQuestionsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100">
-      {/* Header */}
+      {}
       <header className="border-b border-purple-200/30 bg-white/40 backdrop-blur-xl sticky top-0 z-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <button
@@ -129,7 +129,7 @@ export default function UploadQuestionsPage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Input Area */}
+          {}
           <div className="lg:col-span-2 space-y-4">
             <div className="bg-white/70 backdrop-blur border border-purple-200/50 rounded-2xl p-6">
               <label className="block text-sm font-semibold text-gray-700 mb-3">
@@ -143,7 +143,7 @@ export default function UploadQuestionsPage() {
               />
             </div>
 
-            {/* Action Buttons */}
+            {}
             <div className="flex flex-wrap gap-2">
               <button
                 onClick={validateJSON}
@@ -175,7 +175,7 @@ export default function UploadQuestionsPage() {
             </div>
           </div>
 
-          {/* Validation Results */}
+          {}
           <div className="space-y-4">
             {validationResult && (
               <div
@@ -276,7 +276,7 @@ export default function UploadQuestionsPage() {
           </div>
         </div>
 
-        {/* JSON Format Guide */}
+        {}
         <div className="mt-12 bg-white/60 backdrop-blur border border-purple-200/30 rounded-2xl p-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-6">JSON Format Guide</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

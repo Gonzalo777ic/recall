@@ -1,6 +1,6 @@
-// =================================================================
-// DEFINICIÓN IDEAL Y MANIFIESTO DE BUENAS PRÁCTICAS DEL PROYECTO
-// =================================================================
+
+
+
 /*
  * RESUMEN DE ARQUITECTURA DE TIPOS:
  *
@@ -25,10 +25,10 @@
  * sin hacer múltiples llamadas al backend durante el flujo crítico del examen.
  */
 
-// =================================================================
-// Bloque 1: Tipos Básicos y Constantes (Literal Unions)
-// Utilizados para definir valores fijos y sencillos.
-// =================================================================
+
+
+
+
 
 /**
  * @description Enumeración de las posibles dificultades para una pregunta o un filtro de sesión.
@@ -58,10 +58,10 @@ export type TQuestionType = 'multiple-choice' | 'true-false' | 'order-steps' | '
  */
 export type TQuizStatus = 'idle' | 'in-progress' | 'completed' | 'paused';
 
-// =================================================================
-// Bloque 2: Tipos de Dominio (Enriquecidos)
-// Estructuras de datos principales del negocio (preguntas, sesiones, respuestas).
-// =================================================================
+
+
+
+
 
 /**
  * @description Bloque base para todos los tipos de pregunta. Contiene metadatos comunes.
@@ -74,18 +74,18 @@ export interface BaseQuestion {
   id: string;
   category: string;
   difficulty: TQuestionDifficulty;
-  createdAt: number; // Timestamp UNIX
+  createdAt: number;
   updatedAt?: number;
 }
 
-// --- Variantes de Preguntas (Polimorfismo) ---
+
 
 export interface MultipleChoiceQuestion extends BaseQuestion {
-  // 'type' es el discriminante literal que hace funcionar la unión.
+
   type: 'multiple-choice';
   question: string;
   options: string[];
-  correctAnswer: number; // Índice
+  correctAnswer: number;
   explanation?: string;
 }
 
@@ -172,7 +172,7 @@ export interface UserAnswer {
   questionId: string;
   questionType: TQuestionType;
   value: QuizAnswerValue;
-  isCorrect?: boolean; // Calculado a veces en back o front
+  isCorrect?: boolean;
   answeredAt: number;
 }
 
@@ -189,7 +189,7 @@ export interface QuizSession {
   id: string;
   configId: string;
   userId: string;
-  questions: Question[]; // <-- Dato enriquecido (Join)
+  questions: Question[];
   currentQuestionIndex: number;
   status: TQuizStatus;
   score: number;
@@ -198,10 +198,10 @@ export interface QuizSession {
   completedAt?: number;
 }
 
-// =================================================================
-// Bloque 3: Tipos de Utilidad y Presentación (UI/State/API)
-// Utilizados principalmente por componentes, hooks o la capa de datos.
-// =================================================================
+
+
+
+
 
 /**
  * @description Propiedades para el componente QuestionRenderer.
@@ -230,7 +230,7 @@ export interface QuizStoreState {
   questions: Question[];
   isLoading: boolean;
   error: string | null;
-  // Actions
+
   startSession: (config: SessionConfig, questions: Question[]) => void;
   submitAnswer: (questionId: string, answerValue: QuizAnswerValue) => boolean;
   goToNextQuestion: () => void;

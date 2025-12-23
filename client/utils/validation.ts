@@ -1,4 +1,4 @@
-import { Question } from '@/types'; // Eliminamos QuestionType de la importación
+import { Question } from '@/types';
 export interface ValidationResult {
   isValid: boolean;
   errors: string[];
@@ -10,7 +10,7 @@ export type QuestionType =
   | 'true-false' 
   | 'order-steps' 
   | 'match-items'
-  | 'fill-in-the-blank'; // ¡Añadido!
+  | 'fill-in-the-blank';
 
 export function validateQuestionsJSON(data: unknown): ValidationResult {
   const errors: string[] = [];
@@ -46,7 +46,7 @@ export function validateQuestionsJSON(data: unknown): ValidationResult {
 
 
 function isValidQuestionType(type: unknown): type is QuestionType {
-  // ¡Añadir 'fill-in-the-blank'!
+
   return ['multiple-choice', 'true-false', 'order-steps', 'match-items', 'fill-in-the-blank'].includes(
     type as string
   );
@@ -68,7 +68,7 @@ function validateQuestion(item: unknown): string[] {
     errors.push('Missing or invalid "id" (must be string)');
   }
 
-  // Comprobación de tipo (CORREGIDO PARA RESOLVER TS2345)
+
   if (typeof q.type !== 'string') {
       errors.push('Missing or invalid "type" (must be a string)');
   } else if (!isValidQuestionType(q.type)) {
@@ -77,8 +77,8 @@ function validateQuestion(item: unknown): string[] {
       );
   }
 
-  // Si no pasó la validación de tipo, retornamos los errores inmediatamente
-  // para evitar que 'q.type as QuestionType' cause problemas más adelante.
+
+
   if (errors.length > 0) {
       return errors;
   }
@@ -86,9 +86,9 @@ function validateQuestion(item: unknown): string[] {
   if (!q.category || typeof q.category !== 'string') {
     errors.push('Missing or invalid "category" (must be string)');
   }
-  // ... (el resto del código se mantiene igual)
 
-  const type = q.type as QuestionType; // Ahora TypeScript está seguro de que es un QuestionType válido
+
+  const type = q.type as QuestionType;
 
   if (type === 'multiple-choice') {
     validateMultipleChoice(q, errors);
@@ -170,23 +170,23 @@ function validateMatchItems(q: Record<string, unknown>, errors: string[]): void 
   }
 }
 
-// client/utils/validation.ts (Función validateFillInTheBlank)
+
 
 function validateFillInTheBlank(q: Record<string, unknown>, errors: string[]): void {
   if (!q.question || typeof q.question !== 'string') {
     errors.push('Missing or invalid "question" (must be string)');
   }
 
-  // correctText debe ser un string o un array de strings, y no puede estar vacío.
+
   if (!q.correctText) {
     errors.push('Missing "correctText"');
     return;
   }
   
-  // Modificación aquí: Si es string, debe tener contenido
+
   const isString = typeof q.correctText === 'string' && q.correctText.trim() !== ''; 
   
-  // Si es array, todos los elementos deben ser strings no vacíos
+
   const isStringArray = Array.isArray(q.correctText) && q.correctText.every(item => typeof item === 'string' && item.trim() !== '');
 
   if (!isString && !isStringArray) {

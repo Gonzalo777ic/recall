@@ -203,7 +203,7 @@ export default function QuestionRenderer({
       <div className="space-y-6">
         <h2 className="text-2xl font-bold text-gray-900">{question.question}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Left side */}
+          {}
           <div className="space-y-2">
             {question.pairs.map((pair, idx) => (
               <div
@@ -222,7 +222,7 @@ export default function QuestionRenderer({
             ))}
           </div>
 
-          {/* Right side */}
+          {}
           <div className="space-y-2">
             {question.pairs.map((pair, idx) => (
               <div
@@ -259,20 +259,20 @@ export default function QuestionRenderer({
       (userAnswer as string) || ''
     );
     
-    // 1. Determinar las respuestas válidas y convertirlas a un array de strings (ya normalizados).
-    // Usamos una Type Assertion temporal para que TypeScript sepa que tiene la propiedad correctText.
+
+
     const fillInQuestion = question as any; 
     
     const correctAnswers = Array.isArray(fillInQuestion.correctText)
       ? fillInQuestion.correctText.map((s: string) => s.toLowerCase().trim())
       : [fillInQuestion.correctText.toLowerCase().trim()];
     
-    // 2. Normalizar la respuesta del usuario.
+
     const normalizedUserAnswer = textAnswer.toLowerCase().trim();
 
-    // 3. Realizar la comparación.
-    // Usamos el resultado REAL del store (userAnswer) si está disponible, 
-    // pero para fines de visualización en el frontend, comparamos el texto normalizado.
+
+
+
     const isCorrect = answered && correctAnswers.includes(normalizedUserAnswer);
 
 

@@ -42,7 +42,7 @@ export default function QuizBar({
           </div>
         </div>
 
-        {/* Progress bar */}
+        {}
         <div className="w-full bg-white/20 rounded-full h-2 overflow-hidden">
           <div
             className="bg-white h-full transition-all duration-300"

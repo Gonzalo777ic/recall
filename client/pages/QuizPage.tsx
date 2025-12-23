@@ -66,7 +66,7 @@ export default function QuizPage() {
             userAnswer={userAnswer}
           />
 
-          {/* Navigation buttons */}
+          {}
           <div className="flex gap-4 mt-10">
             <button
               onClick={previousQuestion}

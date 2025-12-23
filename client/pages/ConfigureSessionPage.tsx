@@ -37,7 +37,7 @@ export default function ConfigureSessionPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100">
-      {/* Header */}
+      {}
       <header className="border-b border-purple-200/30 bg-white/40 backdrop-blur-xl sticky top-0 z-10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <button
@@ -60,7 +60,7 @@ export default function ConfigureSessionPage() {
 
         <div className="bg-white/70 backdrop-blur border border-purple-200/50 rounded-2xl p-8">
           <div className="space-y-6">
-            {/* Session Name */}
+            {}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
                 Session Name
@@ -73,7 +73,7 @@ export default function ConfigureSessionPage() {
               />
             </div>
 
-            {/* Category Filter */}
+            {}
             {categories.length > 0 && (
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -94,7 +94,7 @@ export default function ConfigureSessionPage() {
               </div>
             )}
 
-            {/* Difficulty Filter */}
+            {}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
                 Difficulty Filter (Optional)
@@ -111,7 +111,7 @@ export default function ConfigureSessionPage() {
               </select>
             </div>
 
-            {/* Questions Per Session */}
+            {}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
                 Questions Per Session: {questionsPerSession}
@@ -129,7 +129,7 @@ export default function ConfigureSessionPage() {
               </p>
             </div>
 
-            {/* Randomize Toggle */}
+            {}
             <div className="flex items-center gap-3">
               <input
                 type="checkbox"
@@ -143,7 +143,7 @@ export default function ConfigureSessionPage() {
               </label>
             </div>
 
-            {/* Action Buttons */}
+            {}
             <div className="flex gap-3 pt-6 border-t border-purple-200">
               <button
                 onClick={() => navigate('/')}
